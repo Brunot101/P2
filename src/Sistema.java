@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
-
 public class Sistema{
     public static void main(String[] args) throws Exception {
         
@@ -15,6 +13,8 @@ public class Sistema{
         menu();
         Scanner scn = new Scanner(System.in);
         int id = 1;
+        int id_p = 1;
+        int id_t = 1;
 
         while(true){
             System.out.printf("Escolha uma opção do menu:");
@@ -28,9 +28,7 @@ public class Sistema{
                     String type = scn.nextLine();
                     System.out.println(name+" Foi adicionado com sucesso com  o cargo de "+type+", deseja fazer algo mais?");
                     User user = new User();
-                    user.name = name;
-                    user.type = type;
-                    user.id = id;
+                    addUser(name, type, id, user );
                     
                     users.add(user);
                     
@@ -91,15 +89,11 @@ public class Sistema{
                 String descr = scn.nextLine();
                 System.out.println(namep+" Foi adicionado com sucesso");
                 Project project = new Project();
-                project.name = namep;
-                project.description = descr;
-                project.status = "Em processo de criacao";
-                project.id = id;
+                addProject( namep,  descr,  id_p,  project);
                 
-                project.date_start = LocalDateTime.now();
                 projects.add(project);
                 
-                id++;
+                id_p++;
                 break;
                 
                 case 4:
@@ -149,8 +143,32 @@ public class Sistema{
                     System.out.println("Opcao invalida, voltando ao menu principal...");
                 }
                 break;
+                case 5:
+                    System.out.println("Nome da tarefa");
+                    String namet = scn.nextLine();
+                    System.out.println("Descricao");
+                    String descrt = scn.nextLine();
+                    System.out.println("Digite o ID do projeto que vai receber esta tarefa");
+                    int id_aux = Integer.parseInt (scn.nextLine());
+                    Task task = new Task();
+                    for(int i = 0; i < projects.size(); i++){
+                        if(id_aux == projects.get(i).id){
+                            addTask(task, namet,id_t, descrt, projects.get(i));
+                            System.out.println(namet+" Foi adicionado com sucesso");
+                            id_t++;
+                        }
+                    }
                     
-                case 0: System.out.println("Encerrando o sistema...");break;
+                
+                    
+                
+                break;
+                    
+                case 0:
+                    System.out.println(projects.get(0).tasks.size());
+                    removeTask(1, 1, projects);
+                    System.out.println(projects.get(0).tasks.size());
+                    System.out.println("Encerrando o sistema...");break;
                     
                 default: break;
                 
@@ -163,13 +181,45 @@ public class Sistema{
 
 
 
-    static void menu(){
+    public static void menu(){
 
         System.out.println("------------------------------------------");
         System.out.println("(1)Adicionar funcionário");
         System.out.println("(2)Remover funcionário");
         System.out.println("(3)Adicionar projeto");
         System.out.println("(4)Remover projeto");
+    }
+
+    public static void addProject(String namep, String descr, int id, Project project){
+        project.name = namep;
+        project.description = descr;
+        project.status = "Em processo de criacao";
+        project.id = id;
+        project.date_start = LocalDateTime.now();
+    }
+    public static void addUser(String name, String type, int id, User user){
+        user.name = name;
+        user.type = type;
+        user.id = id;
+    }
+    public static void addTask(Task task, String namet,int id, String descrt, Project project){
+        task.name = namet;
+        task.id = id;
+        task.description = descrt;
+        project.tasks.add(task);
+        
+    }
+    public static void removeTask(int id_t, int id_p, List <Project> projects){
+        for(int i = 0; i < projects.size(); i++){
+            if(id_p == projects.get(i).id){
+                for(int j = 0; j< projects.get(i).tasks.size(); j++){
+                    if(id_t == projects.get(i).tasks.get(j).id){
+                        projects.get(i).tasks.remove(projects.get(i).tasks.get(j));
+                    }
+                }
+            }
+        }
+        
     }
     
 }

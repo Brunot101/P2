@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class Task {
     public int id;
+    public String name;
     public String description;
     public LocalDateTime date_start;
     public LocalDateTime date_end;
