@@ -3,4 +3,11 @@ public class User {
     public String name;
     public String type;
 
+    public void changeUserName(String newName){
+        this.name = newName;
+    }
+    public void changeTypeUser(String newDescription){
+        this.type = newDescription;
+    }
+    
 }

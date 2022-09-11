@@ -13,6 +13,16 @@ public class Project {
     public List<User>users = new ArrayList<User>();
     public List<Task>tasks = new ArrayList<Task>();
     public String time;
-    public String valor;
+    public String money;
+
+    public void changeProjectName(String newName){
+        this.name = newName;
+    }
+    public void changeProjectDescription(String newDescription){
+        this.description = newDescription;
+    }
+    public void changeProjectMoney(String newMoney){
+        this.money = newMoney;
+    }
     
 }

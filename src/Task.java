@@ -12,6 +12,14 @@ public class Task {
     public User user_ass;
     public List<User>users = new ArrayList<User>();
     
+    public void changeTaskName(String newName){
+        this.name = newName;
+    }
+    public void changeTaskDescription(String newDescription){
+        this.description = newDescription;
+    }
 
+    
+    
 
 }

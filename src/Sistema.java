@@ -90,7 +90,7 @@ public class Sistema{
                 System.out.println(namep+" Foi adicionado com sucesso");
                 Project project = new Project();
                 addProject( namep,  descr,  id_p,  project);
-                
+                project.status = "em processo de criacao";
                 projects.add(project);
                 
                 id_p++;
@@ -165,10 +165,10 @@ public class Sistema{
                 break;
                     
                 case 0:
-                    System.out.println(projects.get(0).tasks.size());
-                    removeTask(1, 1, projects);
-                    System.out.println(projects.get(0).tasks.size());
+                    projects.get(0).changeProjectName("Agora eh kappa fi");;
+                    System.out.printf(projects.get(0).status);
                     System.out.println("Encerrando o sistema...");break;
+                    
                     
                 default: break;
                 
