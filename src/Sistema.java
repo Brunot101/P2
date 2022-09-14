@@ -177,16 +177,20 @@ public class Sistema{
                     System.out.println("Nome da atividade");
                     String nametask = scn.nextLine();
                     queryTask(projects, nametask);
-                break;
-                    
+                    break;
+                
+                case 9:
+                    report(projects);
+                    break;
+
                 case 0:
                     
-                    projects.get(0).coord = users.get(0);
-                    projects.get(0).changeDateStart("2022-09-11T22:00");
-                    projects.get(0).changeDateEnd("2023-09-11T21:00");
-                    projects.get(0).money = "400";
-                    projects.get(0).money_time = "1 ano";
-                    projects.get(0).duration = "1 ano";
+                    // projects.get(0).coord = users.get(0);
+                    // projects.get(0).changeDateStart("2022-09-11T22:00");
+                    // projects.get(0).changeDateEnd("2023-09-11T21:00");
+                    // projects.get(0).money = "400";
+                    // projects.get(0).money_time = "1 ano";
+                    // projects.get(0).duration = "1 ano";
                     
 
                     
@@ -215,6 +219,7 @@ public class Sistema{
         System.out.println("(6)Consultar projeto");
         System.out.println("(7)Consultar usuario");
         System.out.println("(8)Consultar atividade");
+        System.out.println("(9)Imprimir relatorio");
     }
 
     public static void addProject(String namep, String descr, int id, Project project){
@@ -330,6 +335,18 @@ public class Sistema{
         }
     
     }
+    public static void report(List <Project> projects){
+        int count = 0;
+
+        for(Project project: projects){
+
+            count += project.tasks.size();
+        }
+
+        System.out.println("Projects: " + projects.size());
+        System.out.println("Tasks: " + count);
+
+    }   
 
 
 }
