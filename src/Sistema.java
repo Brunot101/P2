@@ -158,15 +158,38 @@ public class Sistema{
                             id_t++;
                         }
                     }
+                    break;
                     
                 
-                    
+                case 6:
+                    System.out.println("Nome do projeto");
+                    String namepp = scn.nextLine();
+                    queryProject(projects, namepp);
+                    break;
                 
+                case 7:
+                    System.out.println("Nome do usuario");
+                    String nameu = scn.nextLine();
+                    queryUser(users, nameu);
+                    break;
+                
+                case 8:
+                    System.out.println("Nome da atividade");
+                    String nametask = scn.nextLine();
+                    queryTask(projects, nametask);
                 break;
                     
                 case 0:
-                    projects.get(0).changeProjectName("Agora eh kappa fi");;
-                    System.out.printf(projects.get(0).status);
+                    
+                    projects.get(0).coord = users.get(0);
+                    projects.get(0).changeDateStart("2022-09-11T22:00");
+                    projects.get(0).changeDateEnd("2023-09-11T21:00");
+                    projects.get(0).money = "400";
+                    projects.get(0).money_time = "1 ano";
+                    projects.get(0).duration = "1 ano";
+                    
+
+                    
                     System.out.println("Encerrando o sistema...");break;
                     
                     
@@ -188,6 +211,10 @@ public class Sistema{
         System.out.println("(2)Remover funcionário");
         System.out.println("(3)Adicionar projeto");
         System.out.println("(4)Remover projeto");
+        System.out.println("(5)Adicionar atividade");
+        System.out.println("(6)Consultar projeto");
+        System.out.println("(7)Consultar usuario");
+        System.out.println("(8)Consultar atividade");
     }
 
     public static void addProject(String namep, String descr, int id, Project project){
@@ -206,6 +233,7 @@ public class Sistema{
         task.name = namet;
         task.id = id;
         task.description = descrt;
+        task.date_start = LocalDateTime.now();
         project.tasks.add(task);
         
     }
@@ -221,9 +249,89 @@ public class Sistema{
         }
         
     }
+    public static void queryUser(List <User> users, String name){
+        
+        for(User user: users){
+            if( user.name.equalsIgnoreCase(name)){
+                System.out.printf("%5s %40s %30s ", "ID", "NAME", "TYPE");
+                System.out.println();
+                System.out.printf("%5s %40s %30s ", user.id, user.name, user.type);
+                System.out.println();
+                break;
+            }
+
+        
+        }
     
+    }
+
+    public static void queryProject(List <Project> projects, String name){
+        
+        for(Project project: projects){
+            if( project.name.equalsIgnoreCase(name)){
+                System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME", "STATUS", "DATE START", "DATE END");
+                System.out.println();
+                System.out.printf("%5s %20s %20s %20s %20s ", project.id, project.name, project.status, project.date_start, project.date_end);
+                System.out.println();
+                System.out.printf("Description:");
+                System.out.println();
+                System.out.printf(project.description);
+                System.out.println();
+                System.out.printf("Cordinator: " + project.coord);
+                System.out.println();
+                System.out.println("Team: ");
+                for(User user : project.users){
+                    System.out.println(user.name);
+                }
+                System.out.println("Tasks: ");
+                for(Task task : project.tasks){
+                    System.out.println(task.name);
+                }
+                System.out.println("Duration: " + project.duration);
+                System.out.println("Money: " + project.money);
+                System.out.println("Money time: " + project.money_time);
+
+                break;
+            }
+
+        
+        }
+    
+    }
+
+
+    public static void queryTask(List <Project> projects, String name){
+        
+        for(Project project: projects){
+            for(Task task : project.tasks){
+
+                if( task.name.equalsIgnoreCase(name)){
+                    System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME",  "DATE START", "DATE END", "PROJECT");
+                    System.out.println();
+                    System.out.printf("%5s %20s %20s  %20s %20s ", task.id, task.name,  task.date_start, task.date_end, project.name);
+                    System.out.println();
+                    System.out.printf("Description:");
+                    System.out.println();
+                    System.out.printf(task.description);
+                    System.out.println();
+                    System.out.printf("Cordinator: " + task.user_ass);
+                    System.out.println();
+                    System.out.println("Team: ");
+                    for(User user : task.users){
+                        System.out.println(user.name);
+                    }
+                    
+            }
+
+                break;
+            }
+
+        
+        }
+    
+    }
+
+
 }
-
-
 
 

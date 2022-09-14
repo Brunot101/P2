@@ -19,7 +19,17 @@ public class Task {
         this.description = newDescription;
     }
 
-    
+    public void changeDateStart(String dateTimeStart){
+        LocalDateTime ex = LocalDateTime.parse(dateTimeStart);
+        this.date_start = ex;
+
+    }
+
+    public void changeDateEnd(String dateTimeEnd){
+        LocalDateTime ex = LocalDateTime.parse(dateTimeEnd);
+        this.date_end = ex;
+
+    }
     
 
 }
