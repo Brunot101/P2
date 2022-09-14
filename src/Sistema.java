@@ -346,7 +346,62 @@ public class Sistema{
         System.out.println("Projects: " + projects.size());
         System.out.println("Tasks: " + count);
 
-    }   
+    }
+
+    public static void addUserProject(List<Project> projects, List<User> users, String name_u, String name_p){
+        int  projectaux = -1;
+        int useraux = -1;
+
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).name.equalsIgnoreCase(name_u)){
+                useraux = i;
+                break;
+            }
+            
+        }
+        for(int i = 0; i < projects.size(); i++){
+            if(projects.get(i).name.equalsIgnoreCase(name_p)){
+                projectaux = i;
+                break;
+            }
+            
+        }
+        if(projectaux == -1 || useraux == -1) return;
+        projects.get(projectaux).users.add(users.get(useraux));
+        users.get(useraux).projects.add(projects.get(projectaux));
+
+
+    }
+
+
+    public static void addUserTask(List<Project> projects, List<User> users, String name_u, String name_t){
+        int  taskauxi = -1;
+        int  taskauxj = -1;
+        int useraux = -1;
+
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).name.equalsIgnoreCase(name_u)){
+                useraux = i;
+                break;
+            }
+            
+        }
+        for(int i = 0; i < projects.size(); i++){
+            for(int j = 0; j < projects.get(i).tasks.size(); j++){
+
+                if(projects.get(i).tasks.get(j).name.equalsIgnoreCase(name_t)){
+                    taskauxi = i;
+                    taskauxj = j;
+                }
+            }
+        }
+        if(taskauxi == -1 || useraux == -1  || taskauxj == -1) return;
+        projects.get(taskauxi).tasks.get(taskauxj).users.add(users.get(useraux));
+        users.get(useraux).tasks.add(projects.get(taskauxi).tasks.get(taskauxj));
+        
+
+
+    }
 
 
 }
