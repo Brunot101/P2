@@ -18,7 +18,7 @@ public class Sistema{
 
         while(true){
             System.out.printf("Escolha uma opção do menu:");
-            int option = Integer.parseInt (scn.nextLine());;
+            int option = Integer.parseInt (scn.nextLine());
 
             switch(option){
                 case 1:
@@ -26,9 +26,17 @@ public class Sistema{
                     String name = scn.nextLine();
                     System.out.println("Cargo do usuário:");
                     String type = scn.nextLine();
+                    System.out.println("Username:");
+                    String username = scn.nextLine();
+                    System.out.println("Password:");
+                    String password = scn.nextLine();
+                    System.out.println("Digite uma pergunta para recuperação de senha:");
+                    String question = scn.nextLine();
+                    System.out.println("Digite a resposta para a pergunta:");
+                    String answer = scn.nextLine();
                     System.out.println(name+" Foi adicionado com sucesso com  o cargo de "+type+", deseja fazer algo mais?");
                     User user = new User();
-                    addUser(name, type, id, user );
+                    addUser(name, type, id, user, username, password, question, answer );
                     
                     users.add(user);
                     
@@ -182,7 +190,24 @@ public class Sistema{
                 case 9:
                     report(projects);
                     break;
-
+                
+                case 10:
+                    
+                    System.out.println("Username:");
+                    String username1 = scn.nextLine();
+                    System.out.println("Password:");
+                    String password1 = scn.nextLine();
+                    
+                    
+                    login(users, username1, password1);
+                    
+                    break;
+                
+                case 11:
+                    System.out.println("Digite o username:");
+                    String username2 = scn.nextLine();
+                    changePassword(users, username2);
+                    break;
                 case 0:
                     
                     // projects.get(0).coord = users.get(0);
@@ -220,6 +245,8 @@ public class Sistema{
         System.out.println("(7)Consultar usuario");
         System.out.println("(8)Consultar atividade");
         System.out.println("(9)Imprimir relatorio");
+        System.out.println("(10)Login");
+        System.out.println("(11)Recuperar senha");
     }
 
     public static void addProject(String namep, String descr, int id, Project project){
@@ -229,10 +256,14 @@ public class Sistema{
         project.id = id;
         project.date_start = LocalDateTime.now();
     }
-    public static void addUser(String name, String type, int id, User user){
+    public static void addUser(String name, String type, int id, User user, String username, String password, String question, String answer){
         user.name = name;
         user.type = type;
         user.id = id;
+        user.username = username;
+        user.password = password;
+        user.question = question;
+        user.answer = answer;
     }
     public static void addTask(Task task, String namet,int id, String descrt, Project project){
         task.name = namet;
@@ -403,7 +434,51 @@ public class Sistema{
 
     }
 
+    public static void login(List<User> users, String username, String password){
 
+        boolean flag = false;
+
+        for(User user : users){
+
+            if(user.username.equalsIgnoreCase(username) && user.password.equalsIgnoreCase(password)){
+                System.out.println("Login efetuado com sucesso! Bem vindo " + user.name);
+                flag = true;
+                
+            }
+        }
+        if(flag == false){
+            System.out.println("Login inválido!");
+        }
+        
+    }
+
+    public static void changePassword(List<User> users, String username ){
+
+        boolean flag = false;
+        for(User user : users){
+            if(user.username.equalsIgnoreCase(username)){
+                flag = true;
+                Scanner scn = new Scanner(System.in);
+                System.out.printf(user.question+"?");
+                String answer = scn.nextLine();
+                if(answer.equalsIgnoreCase(user.answer)){
+                    System.out.printf("Digite a nova senha:");
+                    String password = scn.nextLine();
+                    user.password = password;
+                    
+                    break;
+                }
+                else{
+                    System.out.println("Resposta errada");
+                    break;
+                }
+            }
+            if(flag == false){
+                System.out.println("Usuario nao encontrado!");
+                break;
+            }
+        }
+    }
 }
 
 

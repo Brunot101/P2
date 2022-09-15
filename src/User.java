@@ -8,6 +8,8 @@ public class User {
     public String password;
     public List<Task>tasks = new ArrayList<Task>();
     public List<Project>projects = new ArrayList<Project>();
+    public String question;
+    public String answer;
 
     public void changeUserName(String newName){
         this.name = newName;
