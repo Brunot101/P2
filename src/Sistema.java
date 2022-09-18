@@ -35,8 +35,7 @@ public class Sistema{
                     System.out.println("Digite a resposta para a pergunta:");
                     String answer = scn.nextLine();
                     System.out.println(name+" Foi adicionado com sucesso com  o cargo de "+type+", deseja fazer algo mais?");
-                    User user = new User();
-                    addUser(name, type, id, user, username, password, question, answer );
+                    User user = new User(id, name, type, username, password, question, answer);
                     
                     users.add(user);
                     
@@ -54,7 +53,7 @@ public class Sistema{
                         
 
                         for(int i = 0; i< users.size(); i++){
-                            if(users.get(i).id == id_s){
+                            if(users.get(i).getId() == id_s){
                                 users.remove(users.get(i));
                                 flag = true;
                                 break;
@@ -72,7 +71,7 @@ public class Sistema{
                     else if(option1 == 2){
                         String name_s = scn.nextLine();
                         for(int i = 0; i< users.size(); i++){
-                            if(users.get(i).name.equals(name_s)){
+                            if(users.get(i).getName().equals(name_s)){
                                 users.remove(users.get(i));
                                 flag = true;
                                 break;
@@ -95,11 +94,18 @@ public class Sistema{
                 String namep = scn.nextLine();
                 System.out.println("Descricao");
                 String descr = scn.nextLine();
+                System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
+                String date_start = scn.nextLine();
+                System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
+                String date_end = scn.nextLine();
+                System.out.println("Digite a vigencia da bolsa projeto");
+                String money_duration = scn.nextLine();
                 System.out.println(namep+" Foi adicionado com sucesso");
-                Project project = new Project();
-                addProject( namep,  descr,  id_p,  project);
-                project.status = "em processo de criacao";
+                
+                Project project = new Project(id_p, namep, descr, date_start, date_end, money_duration);
                 projects.add(project);
+                
+                
                 
                 id_p++;
                 break;
@@ -115,7 +121,7 @@ public class Sistema{
                     
 
                     for(int i = 0; i< projects.size(); i++){
-                        if(projects.get(i).id == id_s){
+                        if(projects.get(i).getId() == id_s){
                             projects.remove(projects.get(i));
                             flag2 = true;
                             break;
@@ -133,7 +139,7 @@ public class Sistema{
                 else if(option3 == 2){
                     String name_s = scn.nextLine();
                     for(int i = 0; i< projects.size(); i++){
-                        if(projects.get(i).name.equals(name_s)){
+                        if(projects.get(i).getName().equals(name_s)){
                             projects.remove(projects.get(i));
                             flag2 = true;
                             break;
@@ -152,16 +158,21 @@ public class Sistema{
                 }
                 break;
                 case 5:
-                    System.out.println("Nome da tarefa");
+                    System.out.println("Nome da tarefa:");
                     String namet = scn.nextLine();
-                    System.out.println("Descricao");
+                    System.out.println("Descricao:");
                     String descrt = scn.nextLine();
-                    System.out.println("Digite o ID do projeto que vai receber esta tarefa");
+                    System.out.println("Digite o ID do projeto que vai receber esta tarefa:");
                     int id_aux = Integer.parseInt (scn.nextLine());
-                    Task task = new Task();
+                    System.out.println("Digite a data e hora do inicio da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
+                    String date_start1 = scn.nextLine();
+                    System.out.println("Digite a data e hora do termino da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
+                    String date_end1 = scn.nextLine();
+                    Task task = new Task(id_t, namet, descrt, date_start1, date_end1);
                     for(int i = 0; i < projects.size(); i++){
-                        if(id_aux == projects.get(i).id){
-                            addTask(task, namet,id_t, descrt, projects.get(i));
+                        if(id_aux == projects.get(i).getId()){
+                            projects.get(i).tasks.add(task);
+                            
                             System.out.println(namet+" Foi adicionado com sucesso");
                             id_t++;
                         }
@@ -249,35 +260,35 @@ public class Sistema{
         System.out.println("(11)Recuperar senha");
     }
 
-    public static void addProject(String namep, String descr, int id, Project project){
-        project.name = namep;
-        project.description = descr;
-        project.status = "Em processo de criacao";
-        project.id = id;
-        project.date_start = LocalDateTime.now();
-    }
-    public static void addUser(String name, String type, int id, User user, String username, String password, String question, String answer){
-        user.name = name;
-        user.type = type;
-        user.id = id;
-        user.username = username;
-        user.password = password;
-        user.question = question;
-        user.answer = answer;
-    }
-    public static void addTask(Task task, String namet,int id, String descrt, Project project){
-        task.name = namet;
-        task.id = id;
-        task.description = descrt;
-        task.date_start = LocalDateTime.now();
-        project.tasks.add(task);
+    // public static void addProject(String namep, String descr, int id, Project project){
+    //     project.name = namep;
+    //     project.description = descr;
+    //     project.status = "Em processo de criacao";
+    //     project.id = id;
+    //     project.date_start = LocalDateTime.now();
+    // }
+    // public static void addUser(String name, String type, int id, User user, String username, String password, String question, String answer){
+    //     user.name = name;
+    //     user.type = type;
+    //     user.id = id;
+    //     user.username = username;
+    //     user.password = password;
+    //     user.question = question;
+    //     user.answer = answer;
+    // }
+    // public static void addTask(Task task, String namet,int id, String descrt, Project project){
+    //     task.name = namet;
+    //     task.id = id;
+    //     task.description = descrt;
+    //     task.date_start = LocalDateTime.now();
+    //     project.tasks.add(task);
         
-    }
+    // }
     public static void removeTask(int id_t, int id_p, List <Project> projects){
         for(int i = 0; i < projects.size(); i++){
-            if(id_p == projects.get(i).id){
+            if(id_p == projects.get(i).getId()){
                 for(int j = 0; j< projects.get(i).tasks.size(); j++){
-                    if(id_t == projects.get(i).tasks.get(j).id){
+                    if(id_t == projects.get(i).tasks.get(j).getId()){
                         projects.get(i).tasks.remove(projects.get(i).tasks.get(j));
                     }
                 }
@@ -288,10 +299,10 @@ public class Sistema{
     public static void queryUser(List <User> users, String name){
         
         for(User user: users){
-            if( user.name.equalsIgnoreCase(name)){
+            if( user.getName().equalsIgnoreCase(name)){
                 System.out.printf("%5s %40s %30s ", "ID", "NAME", "TYPE");
                 System.out.println();
-                System.out.printf("%5s %40s %30s ", user.id, user.name, user.type);
+                System.out.printf("%5s %40s %30s ", user.getId() ,user.getName(), user.getType());
                 System.out.println();
                 break;
             }
@@ -304,28 +315,28 @@ public class Sistema{
     public static void queryProject(List <Project> projects, String name){
         
         for(Project project: projects){
-            if( project.name.equalsIgnoreCase(name)){
+            if( project.getName().equalsIgnoreCase(name)){
                 System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME", "STATUS", "DATE START", "DATE END");
                 System.out.println();
-                System.out.printf("%5s %20s %20s %20s %20s ", project.id, project.name, project.status, project.date_start, project.date_end);
+                System.out.printf("%5s %20s %20s %20s %20s ", project.getId(), project.getName(), project.getStatus(), project.showDateStart(), project.showDateEnd());
                 System.out.println();
                 System.out.printf("Description:");
                 System.out.println();
-                System.out.printf(project.description);
+                System.out.printf(project.getDescription());
                 System.out.println();
                 System.out.printf("Cordinator: " + project.coord);
                 System.out.println();
                 System.out.println("Team: ");
                 for(User user : project.users){
-                    System.out.println(user.name);
+                    System.out.println(user.getName());
                 }
                 System.out.println("Tasks: ");
                 for(Task task : project.tasks){
-                    System.out.println(task.name);
+                    System.out.println(task.getName());
                 }
-                System.out.println("Duration: " + project.duration);
-                System.out.println("Money: " + project.money);
-                System.out.println("Money time: " + project.money_time);
+                System.out.println("Money Duration: " + project.getMoneyDuration());
+                System.out.println("Money max: " + project.getMoney());
+                
 
                 break;
             }
@@ -341,20 +352,20 @@ public class Sistema{
         for(Project project: projects){
             for(Task task : project.tasks){
 
-                if( task.name.equalsIgnoreCase(name)){
+                if( task.getName().equalsIgnoreCase(name)){
                     System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME",  "DATE START", "DATE END", "PROJECT");
                     System.out.println();
-                    System.out.printf("%5s %20s %20s  %20s %20s ", task.id, task.name,  task.date_start, task.date_end, project.name);
+                    System.out.printf("%5s %20s %20s  %20s %20s ", task.getId(), task.getName(),  task.showDateStart(), task.showDateEnd(), project.getName());
                     System.out.println();
                     System.out.printf("Description:");
                     System.out.println();
-                    System.out.printf(task.description);
+                    System.out.printf(task.getDescription());
                     System.out.println();
                     System.out.printf("Cordinator: " + task.user_ass);
                     System.out.println();
                     System.out.println("Team: ");
                     for(User user : task.users){
-                        System.out.println(user.name);
+                        System.out.println(user.getName());
                     }
                     
             }
@@ -384,14 +395,14 @@ public class Sistema{
         int useraux = -1;
 
         for(int i = 0; i < users.size(); i++){
-            if(users.get(i).name.equalsIgnoreCase(name_u)){
+            if(users.get(i).getName().equalsIgnoreCase(name_u)){
                 useraux = i;
                 break;
             }
             
         }
         for(int i = 0; i < projects.size(); i++){
-            if(projects.get(i).name.equalsIgnoreCase(name_p)){
+            if(projects.get(i).getName().equalsIgnoreCase(name_p)){
                 projectaux = i;
                 break;
             }
@@ -411,7 +422,7 @@ public class Sistema{
         int useraux = -1;
 
         for(int i = 0; i < users.size(); i++){
-            if(users.get(i).name.equalsIgnoreCase(name_u)){
+            if(users.get(i).getName().equalsIgnoreCase(name_u)){
                 useraux = i;
                 break;
             }
@@ -420,7 +431,7 @@ public class Sistema{
         for(int i = 0; i < projects.size(); i++){
             for(int j = 0; j < projects.get(i).tasks.size(); j++){
 
-                if(projects.get(i).tasks.get(j).name.equalsIgnoreCase(name_t)){
+                if(projects.get(i).tasks.get(j).getName().equalsIgnoreCase(name_t)){
                     taskauxi = i;
                     taskauxj = j;
                 }
@@ -440,8 +451,8 @@ public class Sistema{
 
         for(User user : users){
 
-            if(user.username.equalsIgnoreCase(username) && user.password.equalsIgnoreCase(password)){
-                System.out.println("Login efetuado com sucesso! Bem vindo " + user.name);
+            if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)){
+                System.out.println("Login efetuado com sucesso! Bem vindo " + user.getName());
                 flag = true;
                 
             }
@@ -456,15 +467,15 @@ public class Sistema{
 
         boolean flag = false;
         for(User user : users){
-            if(user.username.equalsIgnoreCase(username)){
+            if(user.getUsername().equalsIgnoreCase(username)){
                 flag = true;
                 Scanner scn = new Scanner(System.in);
-                System.out.printf(user.question+"?");
+                System.out.printf(user.getQuestion()+"?");
                 String answer = scn.nextLine();
-                if(answer.equalsIgnoreCase(user.answer)){
+                if(answer.equalsIgnoreCase(user.getAnswer())){
                     System.out.printf("Digite a nova senha:");
                     String password = scn.nextLine();
-                    user.password = password;
+                    user.setPassword(password);
                     
                     break;
                 }
