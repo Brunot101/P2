@@ -316,26 +316,7 @@ public class Sistema{
         
         for(Project project: projects){
             if( project.getName().equalsIgnoreCase(name)){
-                System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME", "STATUS", "DATE START", "DATE END");
-                System.out.println();
-                System.out.printf("%5s %20s %20s %20s %20s ", project.getId(), project.getName(), project.getStatus(), project.showDateStart(), project.showDateEnd());
-                System.out.println();
-                System.out.printf("Description:");
-                System.out.println();
-                System.out.printf(project.getDescription());
-                System.out.println();
-                System.out.printf("Cordinator: " + project.coord);
-                System.out.println();
-                System.out.println("Team: ");
-                for(User user : project.users){
-                    System.out.println(user.getName());
-                }
-                System.out.println("Tasks: ");
-                for(Task task : project.tasks){
-                    System.out.println(task.getName());
-                }
-                System.out.println("Money Duration: " + project.getMoneyDuration());
-                System.out.println("Money max: " + project.getMoney());
+                project.showInfo();
                 
 
                 break;
@@ -353,20 +334,7 @@ public class Sistema{
             for(Task task : project.tasks){
 
                 if( task.getName().equalsIgnoreCase(name)){
-                    System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME",  "DATE START", "DATE END", "PROJECT");
-                    System.out.println();
-                    System.out.printf("%5s %20s %20s  %20s %20s ", task.getId(), task.getName(),  task.showDateStart(), task.showDateEnd(), project.getName());
-                    System.out.println();
-                    System.out.printf("Description:");
-                    System.out.println();
-                    System.out.printf(task.getDescription());
-                    System.out.println();
-                    System.out.printf("Cordinator: " + task.user_ass);
-                    System.out.println();
-                    System.out.println("Team: ");
-                    for(User user : task.users){
-                        System.out.println(user.getName());
-                    }
+                   task.showInfo();
                     
             }
 

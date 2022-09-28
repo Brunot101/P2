@@ -77,7 +77,7 @@ public class Project {
         this.date_end = ex;
     }
     
-    public void chasetngeStatus(){
+    public void changeStatus(){
         if(this.date_start != null && this.date_end != null && 
         (this.coord.getType().equalsIgnoreCase("professor")  || this.coord.getType().equalsIgnoreCase("pesquisador") )
         && !this.tasks.isEmpty() && !this.users.isEmpty() && !this.money_duration.isEmpty()
@@ -106,6 +106,28 @@ public class Project {
     public String showDateEnd(){
         
         return this.date_end.toString();
+    }
+    public void showInfo(){
+        System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME", "STATUS", "DATE START", "DATE END");
+                System.out.println();
+                System.out.printf("%5s %20s %20s %20s %20s ",this.id, this.name, this.status, showDateStart(), showDateEnd());
+                System.out.println();
+                System.out.printf("Description:");
+                System.out.println();
+                System.out.printf(getDescription());
+                System.out.println();
+                System.out.printf("Cordinator: " + this.coord);
+                System.out.println();
+                System.out.println("Team: ");
+                for(User user : users){
+                    System.out.println(user.getName());
+                }
+                System.out.println("Tasks: ");
+                for(Task task : this.tasks){
+                    System.out.println(task.getName());
+                }
+                System.out.println("Money Duration: " + getMoneyDuration());
+                System.out.println("Money max: " + getMoney());
     }
 
     
