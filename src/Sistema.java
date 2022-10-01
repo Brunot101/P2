@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Sistema{
+public class Sistema implements Login{
     public static void main(String[] args) throws Exception {
         
         List<Project>projects = new ArrayList<Project>();
