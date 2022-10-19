@@ -19,15 +19,13 @@ public class Project {
 
 
 
-    public Project(int id, String name, String description,  String date_start, String date_end, String money_duration){
+    public Project(int id, String name, String description,  LocalDateTime date_start, LocalDateTime date_end, String money_duration){
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = "em processo de criacao";
-        LocalDateTime ex = LocalDateTime.parse(date_start);
-        this.date_start = ex;
-        ex = LocalDateTime.parse(date_end);
-        this.date_end = ex;
+        this.date_start = date_start;
+        this.date_end = date_end;
         this.money_duration = money_duration;
     }
 

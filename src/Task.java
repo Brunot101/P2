@@ -13,7 +13,7 @@ public class Task extends Project {
     public List<User>users = new ArrayList<User>();
     
 
-    public Task(int id, String name, String description, String date_start, String date_end){
+    public Task(int id, String name, String description,LocalDateTime date_start,LocalDateTime date_end){
         super(id, name, description, date_start, date_end, null);
         // this.id = id;
         // this.name = name;

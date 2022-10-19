@@ -1,4 +1,6 @@
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +17,7 @@ public class Sistema implements Login{
         int id = 1;
         int id_p = 1;
         int id_t = 1;
+        String types[] = {"aluno de graduacao","aluno de mestrado", "aluno de doutorado", "professor", "pesquisador", "profissional","tecnico"};
 
         while(true){
             System.out.printf("Escolha uma opção do menu:");
@@ -22,24 +25,30 @@ public class Sistema implements Login{
 
             switch(option){
                 case 1:
-                    System.out.println("Nome do usuário:");
-                    String name = scn.nextLine();
-                    System.out.println("Cargo do usuário:");
-                    String type = scn.nextLine();
-                    System.out.println("Username:");
-                    String username = scn.nextLine();
-                    System.out.println("Password:");
-                    String password = scn.nextLine();
-                    System.out.println("Digite uma pergunta para recuperação de senha:");
-                    String question = scn.nextLine();
-                    System.out.println("Digite a resposta para a pergunta:");
-                    String answer = scn.nextLine();
-                    System.out.println(name+" Foi adicionado com sucesso com  o cargo de "+type+", deseja fazer algo mais?");
-                    User user = new User(id, name, type, username, password, question, answer);
-                    
-                    users.add(user);
-                    
-                    id++;
+                    try{
+
+                        System.out.println("Nome do usuário:");
+                        String name = scn.nextLine();
+                        System.out.println("Cargo do usuário {aluno de graduacao, aluno de mestrado e aluno de doutorado, professor, pesquisador, profissional ou tecnico}:");
+                        String type = scn.nextLine();
+                        System.out.println("Username:");
+                        String username = scn.nextLine();
+                        System.out.println("Password:");
+                        String password = scn.nextLine();
+                        System.out.println("Digite uma pergunta para recuperação de senha:");
+                        String question = scn.nextLine();
+                        System.out.println("Digite a resposta para a pergunta:");
+                        String answer = scn.nextLine();
+                        System.out.println(name+" Foi adicionado com sucesso com  o cargo de "+type+", deseja fazer algo mais?");
+                        User user = new User(id, name, type, username, password, question, answer);
+                        
+                        users.add(user);
+                        
+                        id++;
+                    }
+                    catch(Exception e){
+
+                    }
                     break;
                 
                     case 2:
@@ -94,20 +103,29 @@ public class Sistema implements Login{
                 String namep = scn.nextLine();
                 System.out.println("Descricao");
                 String descr = scn.nextLine();
-                System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
-                String date_start = scn.nextLine();
-                System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
-                String date_end = scn.nextLine();
-                System.out.println("Digite a vigencia da bolsa projeto");
-                String money_duration = scn.nextLine();
-                System.out.println(namep+" Foi adicionado com sucesso");
-                
-                Project project = new Project(id_p, namep, descr, date_start, date_end, money_duration);
-                projects.add(project);
-                
-                
-                
-                id_p++;
+                System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                try{
+                    String date_start = scn.nextLine();
+                    System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                    String date_end = scn.nextLine();
+                    LocalDateTime a =  LocalDateTime.parse(date_start);
+                    LocalDateTime b =  LocalDateTime.parse(date_end);
+                    System.out.println("Digite a vigencia da bolsa projeto");
+                    String money_duration = scn.nextLine();
+                    System.out.println(namep+" Foi adicionado com sucesso");
+                    
+                    Project project = new Project(id_p, namep, descr, a, b, money_duration);
+                    projects.add(project);
+                    
+                    
+                    
+                    id_p++;
+
+                }
+                catch(DateTimeParseException e){
+                    System.out.println("Formato de data e hora incorreto");
+
+                }
                 break;
                 
                 case 4:
@@ -163,20 +181,38 @@ public class Sistema implements Login{
                     System.out.println("Descricao:");
                     String descrt = scn.nextLine();
                     System.out.println("Digite o ID do projeto que vai receber esta tarefa:");
-                    int id_aux = Integer.parseInt (scn.nextLine());
-                    System.out.println("Digite a data e hora do inicio da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
-                    String date_start1 = scn.nextLine();
-                    System.out.println("Digite a data e hora do termino da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos e minutos podem ser omitidos");
-                    String date_end1 = scn.nextLine();
-                    Task task = new Task(id_t, namet, descrt, date_start1, date_end1);
-                    for(int i = 0; i < projects.size(); i++){
-                        if(id_aux == projects.get(i).getId()){
-                            projects.get(i).tasks.add(task);
-                            
-                            System.out.println(namet+" Foi adicionado com sucesso");
-                            id_t++;
+                    int id_aux;
+                    try{
+
+                        id_aux = Integer.parseInt (scn.nextLine());
+                        System.out.println("Digite a data e hora do inicio da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                        String date_start1 = scn.nextLine();
+                        System.out.println("Digite a data e hora do termino da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                        String date_end1 = scn.nextLine();
+                        LocalDateTime ex1 = LocalDateTime.parse(date_start1);
+                        LocalDateTime ex2 = LocalDateTime.parse(date_end1);
+                        Task task = new Task(id_t, namet, descrt, ex1, ex2);
+                        for(int i = 0; i < projects.size(); i++){
+                            if(id_aux == projects.get(i).getId()){
+                                projects.get(i).tasks.add(task);
+                                
+                                System.out.println(namet+" Foi adicionado com sucesso");
+                                id_t++;
+                            }
                         }
+
                     }
+                    catch(NumberFormatException e){
+                        System.out.println("Entrada incorreta");
+                    }
+                    catch(DateTimeParseException e){
+
+                        System.out.println("Formato de data e hora incorreto");
+                    }
+                    catch(NullPointerException e ){
+                        System.out.println("Projeto nao encontrado");
+                    }
+                    
                     break;
                     
                 
@@ -298,31 +334,44 @@ public class Sistema implements Login{
     }
     public static void queryUser(List <User> users, String name){
         
-        for(User user: users){
-            if( user.getName().equalsIgnoreCase(name)){
-                System.out.printf("%5s %40s %30s ", "ID", "NAME", "TYPE");
-                System.out.println();
-                System.out.printf("%5s %40s %30s ", user.getId() ,user.getName(), user.getType());
-                System.out.println();
-                break;
-            }
+        boolean flag = false;
 
-        
+            for(User user: users){
+                if( user.getName().equalsIgnoreCase(name)){
+                    System.out.printf("%5s %40s %30s ", "ID", "NAME", "TYPE");
+                    System.out.println();
+                    System.out.printf("%5s %40s %30s ", user.getId() ,user.getName(), user.getType());
+                    System.out.println();
+                    flag = true;
+                    break;
+                }
+    
+            
+            }
+        if(!flag){
+            System.out.println("Usuario nao cadastrado");
         }
+        
     
     }
 
     public static void queryProject(List <Project> projects, String name){
         
+        boolean flag = false;
         for(Project project: projects){
             if( project.getName().equalsIgnoreCase(name)){
                 project.showInfo();
+                flag = true;
                 
 
                 break;
             }
 
         
+        
+        }
+        if(!flag){
+            System.out.println("Projeto nao existente");
         }
     
     }
@@ -330,18 +379,25 @@ public class Sistema implements Login{
 
     public static void queryTask(List <Project> projects, String name){
         
+        boolean flag = false;
         for(Project project: projects){
             for(Task task : project.tasks){
 
                 if( task.getName().equalsIgnoreCase(name)){
                    task.showInfo();
+                   flag = true;
                     
             }
 
                 break;
             }
+        
+            
 
         
+        }
+        if(!flag){
+            System.out.println("Tarefa nao existente");
         }
     
     }
