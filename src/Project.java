@@ -56,10 +56,13 @@ public class Project {
 
 
 
-    public void setProjectName(String newName){
+    public void setName(String newName){
         this.name = newName;
     }
-    public void setProjectDescription(String newDescription){
+    public void setMoneyDuration(String newMoneyDuration){
+        this.money_duration = newMoneyDuration;
+    }
+    public void setDescription(String newDescription){
         this.description = newDescription;
     }
     // public void setProjectMoney(String newMoney){
@@ -75,23 +78,33 @@ public class Project {
         this.date_end = ex;
     }
     
+    
     public void changeStatus(){
-        if(this.date_start != null && this.date_end != null && 
-        (this.coord.getType().equalsIgnoreCase("professor")  || this.coord.getType().equalsIgnoreCase("pesquisador") )
+        if(this.date_start != null && this.date_end != null
         && !this.tasks.isEmpty() && !this.users.isEmpty() && !this.money_duration.isEmpty()
         && !this.money_max.isEmpty() ){
-            if( this.status.equalsIgnoreCase( "em processo de criacao") ){
-                this.status = "inciado";
-            }
 
-            else if(this.status.equalsIgnoreCase("inciado") && this.date_start.isAfter(LocalDateTime.now()) ){
-                this.status = "em andamento";
+            try{
+                if(!this.coord.getType().equalsIgnoreCase("pesquisador")|| !!this.coord.getType().equalsIgnoreCase("professor"))
+                throw new Exception("Coordenador nao possui o cargo para alterar o status do projeto");
+                if( this.status.equalsIgnoreCase( "em processo de criacao") ){
+                    this.status = "inciado";
+                }
+    
+                else if(this.status.equalsIgnoreCase("inciado") && this.date_start.isAfter(LocalDateTime.now()) ){
+                    this.status = "em andamento";
+    
+                }
+                else if(this.status.equalsIgnoreCase("em andamento") ){
+                    this.status = "concluido";
+    
+                }
+            }
+            catch(Exception e){
 
             }
-            else if(this.status.equalsIgnoreCase("em andamento") ){
-                this.status = "concluido";
-
-            }
+            
+                
 
         }
     }

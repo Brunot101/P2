@@ -59,7 +59,21 @@ public class User {
     public void setPassword(String newPassword){
         this.password = newPassword;
     }
-
+    public void setType(String newType){
+        this.type = newType;
+    }
+    public void setUserPassword(String newPassword){
+        this.password = newPassword;
+    }
+    public void setUserUserName(String newUserName){
+        this.username = newUserName;
+    }
+    public void setUserQuestion(String newQuestion){
+        this.question = newQuestion;
+    }
+    public void setUserAnswer(String newAnswer){
+        this.answer = newAnswer;
+    }
 
 
 

@@ -2,6 +2,7 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,13 +13,26 @@ public class Sistema implements Login{
         List<Project>projects = new ArrayList<Project>();
         List<User>users = new ArrayList<User>();
         
+        String namet;       
+        String descrt;         
+        int id_aux;
+        String namep;
+        String descr;
+        String date_start;
+        String date_end;
+        LocalDateTime a;
+        LocalDateTime b;
+        
         menu();
         Scanner scn = new Scanner(System.in);
         int id = 1;
         int id_p = 1;
         int id_t = 1;
-        String types[] = {"aluno de graduacao","aluno de mestrado", "aluno de doutorado", "professor", "pesquisador", "profissional","tecnico"};
-
+        String[] list1 = {"graduando", "mestrando", "doutorando", "professor", "pesquisador", "profissional", "tecnico"};
+        List<String> list2 = Arrays.asList(list1);
+        List<String> types = new ArrayList<String>();
+        types.addAll(list2);
+        
         while(true){
             System.out.printf("Escolha uma opção do menu:");
             int option = Integer.parseInt (scn.nextLine());
@@ -26,11 +40,14 @@ public class Sistema implements Login{
             switch(option){
                 case 1:
                     try{
-
+                        
                         System.out.println("Nome do usuário:");
                         String name = scn.nextLine();
-                        System.out.println("Cargo do usuário {aluno de graduacao, aluno de mestrado e aluno de doutorado, professor, pesquisador, profissional ou tecnico}:");
+                        System.out.println("Cargo do usuário {graduando, mestrando, doutorando, professor, pesquisador, profissional ou tecnico}:");
                         String type = scn.nextLine();
+                        if(!types.contains(type)){
+                            throw new Exception("Cargo inválido");
+                        }
                         System.out.println("Username:");
                         String username = scn.nextLine();
                         System.out.println("Password:");
@@ -47,7 +64,7 @@ public class Sistema implements Login{
                         id++;
                     }
                     catch(Exception e){
-
+                        System.out.println(e.getMessage());
                     }
                     break;
                 
@@ -99,34 +116,33 @@ public class Sistema implements Login{
                     }
                     break;
                 case 3:
-                System.out.println("Nome do projeto");
-                String namep = scn.nextLine();
-                System.out.println("Descricao");
-                String descr = scn.nextLine();
-                System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
-                try{
-                    String date_start = scn.nextLine();
-                    System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
-                    String date_end = scn.nextLine();
-                    LocalDateTime a =  LocalDateTime.parse(date_start);
-                    LocalDateTime b =  LocalDateTime.parse(date_end);
-                    System.out.println("Digite a vigencia da bolsa projeto");
-                    String money_duration = scn.nextLine();
-                    System.out.println(namep+" Foi adicionado com sucesso");
-                    
-                    Project project = new Project(id_p, namep, descr, a, b, money_duration);
-                    projects.add(project);
-                    
-                    
-                    
-                    id_p++;
+                    System.out.println("Nome do projeto");
+                    namep = scn.nextLine();
+                    System.out.println("Descricao");
+                    descr = scn.nextLine();
+                    System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                    try{
+                        date_start = scn.nextLine();
+                        System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                        date_end = scn.nextLine();
+                        a =  LocalDateTime.parse(date_start);
+                        b =  LocalDateTime.parse(date_end);
+                        System.out.println("Digite a vigencia da bolsa projeto");
+                        String money_duration = scn.nextLine();
+                        System.out.println(namep+" Foi adicionado com sucesso");
+                        
+                        Project project = new Project(id_p, namep, descr, a, b, money_duration);
+                        projects.add(project);
+                        
+                        
+                        id_p++;
 
-                }
-                catch(DateTimeParseException e){
-                    System.out.println("Formato de data e hora incorreto");
+                    }
+                    catch(DateTimeParseException e){
+                        System.out.println("Formato de data e hora incorreto");
 
-                }
-                break;
+                    }
+                    break;
                 
                 case 4:
                 System.out.printf("Digite 1 para buscar e remover o projeto pelo ID, e 2 para remover pelo nome do projeto:");
@@ -177,11 +193,11 @@ public class Sistema implements Login{
                 break;
                 case 5:
                     System.out.println("Nome da tarefa:");
-                    String namet = scn.nextLine();
+                    namet = scn.nextLine();
                     System.out.println("Descricao:");
-                    String descrt = scn.nextLine();
+                    descrt = scn.nextLine();
                     System.out.println("Digite o ID do projeto que vai receber esta tarefa:");
-                    int id_aux;
+                    
                     try{
 
                         id_aux = Integer.parseInt (scn.nextLine());
@@ -255,6 +271,188 @@ public class Sistema implements Login{
                     String username2 = scn.nextLine();
                     changePassword(users, username2);
                     break;
+                case 12:
+                    System.out.println("Digite o nome do usuário que deseja editar:");
+                    String username3 = scn.nextLine();
+                    boolean flagu = false;
+
+        
+                    for(User user: users){
+                        if( user.getName().equalsIgnoreCase(username3)){
+                            
+                            flagu = true;
+                            
+                            try{
+                                System.out.println("Digite as informacoes que deseja alterar. Caso nao queira alterar basta teclar Enter");
+                                System.out.println("Nome do usuário:");
+                                String newname = scn.nextLine();
+                                System.out.println("Cargo do usuário {graduando, mestrando, doutorando, professor, pesquisador, profissional ou tecnico}:");
+                                String newtype = scn.nextLine();
+                                if(!types.contains(newtype) && newtype.length()!=0){
+                                    throw new Exception("Cargo inválido");
+                                }
+                                System.out.println("Username:");
+                                String newusername = scn.nextLine();
+                                System.out.println("Password:");
+                                String newpassword = scn.nextLine();
+                                System.out.println("Digite uma pergunta para recuperação de senha:");
+                                String newquestion = scn.nextLine();
+                                System.out.println("Digite a resposta para a pergunta:");
+                                String newanswer = scn.nextLine();
+                                if(newname.length() != 0){
+                                    user.setUserName(newname);
+                                }
+                                if(newtype.length() != 0){
+                                    user.setType(newtype);
+                                }
+                                if(newusername.length() != 0){
+                                    user.setUserUserName(newusername);
+                                }
+                                if(newpassword.length() != 0){
+                                    user.setUserPassword(newpassword);
+                                }
+                                if(newquestion.length() != 0){
+                                    user.setUserQuestion(newquestion);
+                                }
+                                if(newanswer.length() != 0){
+                                    user.setUserAnswer(newanswer);
+                                }
+                                
+                            }
+                            catch(Exception e){
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    }
+                    if(!flagu){
+                        System.out.println("Usuario nao cadastrado");
+                    }
+                
+                    
+                    break;
+                case 13:
+                    System.out.println("Nome da tarefa que deseja alterar os dados:");
+                    namet = scn.nextLine();
+                    boolean flagt = false;
+                    try{
+                        for(Project project: projects){
+                            for(Task task : project.tasks){
+                                if( task.getName().equalsIgnoreCase(namet)){
+                                    System.out.println("Digite as informacoes que deseja alterar. Caso nao queira alterar basta teclar Enter");
+                                    System.out.println("Nome da tarefa:");
+                                    namet = scn.nextLine();
+                                    System.out.println("Descricao:");
+                                    descrt = scn.nextLine();
+                                    System.out.println("Digite a data e hora do inicio da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                                    String date_start1 = scn.nextLine();
+                                    System.out.println("Digite a data e hora do termino da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                                    String date_end1 = scn.nextLine();
+                                    
+                                    
+                                    if(namet.length() != 0){
+                                        task.setName(namet);
+                                    }
+                                    if(descrt.length() != 0){
+                                        task.setDescription(descrt);
+                                    }
+                                    if(date_start1.length() != 0){
+                                        LocalDateTime ex1 = LocalDateTime.parse(date_start1);
+                                        task.setDateStart(date_start1);
+                                    }
+                                    
+                                    if(date_end1.length() != 0){
+                                        LocalDateTime ex2 = LocalDateTime.parse(date_end1);
+                                        task.setDateEnd(date_end1);
+                                    }
+                                flagt = true;
+                                    
+                            }
+
+                                break;
+                            }
+                        
+                            
+
+                        
+                        }
+                        if(!flagt){
+                            System.out.println("Tarefa nao existente");
+                        }
+
+                        
+                        
+                        
+                        
+
+                    }
+                    catch(NumberFormatException e){
+                        System.out.println("Entrada incorreta");
+                    }
+                    catch(DateTimeParseException e){
+
+                        System.out.println("Formato de data e hora incorreto");
+                    }
+                    break;
+                case 14:
+                    System.out.println("Nome do projeto que deseja editar");
+                    namep = scn.nextLine();
+                    boolean flagh = false;
+                    for(Project project: projects){
+                        if( project.getName().equalsIgnoreCase(namep)){
+                            try{
+
+                                System.out.println("Nome do projeto");
+                                namep = scn.nextLine();
+                                System.out.println("Descricao");
+                                descr = scn.nextLine();
+                                System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                                date_start = scn.nextLine();
+                                System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                                date_end = scn.nextLine();
+                                
+                                System.out.println("Digite a vigencia da bolsa projeto");
+                                String money_duration = scn.nextLine();
+                                
+                                if(namep.length()!= 0){
+                                    project.setName(namep);
+                                }
+                                if(descr.length()!= 0){
+                                    project.setDescription(descr);
+                                }
+                                if(date_start.length()!= 0){
+                                    a =  LocalDateTime.parse(date_start);
+                                    project.setDateStart(date_start);
+                                }
+                                if(date_end.length()!= 0){
+                                    b =  LocalDateTime.parse(date_end);
+                                    project.setDateEnd(date_end);
+                                }
+                                if(money_duration.length()!= 0){
+                                    project.setDateEnd(money_duration);
+                                }
+                                
+
+                            
+        
+                            }
+                            catch(DateTimeParseException e){
+                                System.out.println("Formato de data e hora incorreto");
+        
+                            }
+                            flagh = true;
+                            
+
+                            break;
+                        }
+                    }
+                    if(!flagh){
+                        System.out.println("Projeto nao existente");
+                    }
+                    
+                    
+                    
+                    break;
+                    
                 case 0:
                     
                     // projects.get(0).coord = users.get(0);
@@ -294,6 +492,9 @@ public class Sistema implements Login{
         System.out.println("(9)Imprimir relatorio");
         System.out.println("(10)Login");
         System.out.println("(11)Recuperar senha");
+        System.out.println("(12)Editar usuario");
+        System.out.println("(13)Editar atividade");
+        System.out.println("(14)Editar projeto");
     }
 
     // public static void addProject(String namep, String descr, int id, Project project){
@@ -336,12 +537,14 @@ public class Sistema implements Login{
         
         boolean flag = false;
 
+        
             for(User user: users){
                 if( user.getName().equalsIgnoreCase(name)){
                     System.out.printf("%5s %40s %30s ", "ID", "NAME", "TYPE");
                     System.out.println();
                     System.out.printf("%5s %40s %30s ", user.getId() ,user.getName(), user.getType());
                     System.out.println();
+                    
                     flag = true;
                     break;
                 }
@@ -514,6 +717,12 @@ public class Sistema implements Login{
             }
         }
     }
+    
+
+        
+        
+        
+    
 }
 
 
