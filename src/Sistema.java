@@ -400,6 +400,7 @@ public class Sistema implements Login{
                     for(Project project: projects){
                         if( project.getName().equalsIgnoreCase(namep)){
                             try{
+                                System.out.println("Digite as informacoes que deseja alterar. Caso nao queira alterar basta teclar Enter");
 
                                 System.out.println("Nome do projeto");
                                 namep = scn.nextLine();
