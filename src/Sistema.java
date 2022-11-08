@@ -608,13 +608,19 @@ public class Sistema implements Login{
     public static void report(List <Project> projects){
         int count = 0;
 
-        for(Project project: projects){
+        try{
+            for(Project project: projects){
 
-            count += project.tasks.size();
+                count += project.tasks.size();
+            }
+    
+            System.out.println("Projects: " + projects.size());
+            System.out.println("Tasks: " + count);
         }
-
-        System.out.println("Projects: " + projects.size());
-        System.out.println("Tasks: " + count);
+        catch(Exception e){
+            System.out.println("Erro!");
+        }
+        
 
     }
 
@@ -673,21 +679,32 @@ public class Sistema implements Login{
 
     }
 
-    public static void login(List<User> users, String username, String password){
+    public static void login(List<User> users, String username, String password) {
 
         boolean flag = false;
 
-        for(User user : users){
+        try{
+            for(User user : users){
 
-            if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)){
-                System.out.println("Login efetuado com sucesso! Bem vindo " + user.getName());
-                flag = true;
-                
-            }
+                if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)){
+                        System.out.println("Login efetuado com sucesso! Bem vindo " + user.getName());
+                        flag = true;
+                        
+                    }
+                }
+                if(flag == false){
+                    throw new Exception("Login invalido");
+                    
+                }
         }
-        if(flag == false){
-            System.out.println("Login inválido!");
+        catch(Exception e){
+           System.out.println(e.getMessage());
         }
+        
+            
+        
+
+        
         
     }
 
