@@ -23,6 +23,7 @@ public class Sistema implements Login{
         LocalDateTime a;
         LocalDateTime b;
         
+        
         menu();
         Scanner scn = new Scanner(System.in);
         int id = 1;
@@ -125,14 +126,12 @@ public class Sistema implements Login{
                         date_start = scn.nextLine();
                         System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
                         date_end = scn.nextLine();
-                        a =  LocalDateTime.parse(date_start);
-                        b =  LocalDateTime.parse(date_end);
-                        DateRange date_range = new DateRange(a,b);
+                        
                         System.out.println("Digite a vigencia da bolsa projeto");
                         String money_duration = scn.nextLine();
                         System.out.println(namep+" Foi adicionado com sucesso");
                         
-                        Project project = new Project(id_p, namep, descr, date_range, money_duration);
+                        Project project = new Project(id_p, namep, descr, StringToDateRange(date_start, date_end), money_duration);
                         projects.add(project);
                         
                         
@@ -206,12 +205,11 @@ public class Sistema implements Login{
                         String date_start1 = scn.nextLine();
                         System.out.println("Digite a data e hora do termino da tarefa no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
                         String date_end1 = scn.nextLine();
-                        LocalDateTime ex1 = LocalDateTime.parse(date_start1);
-                        LocalDateTime ex2 = LocalDateTime.parse(date_end1);
-                        DateRange date = new DateRange(ex1,ex2);
-                        Task task = new Task(id_t, namet, descrt,date);
+                        
+                        
                         for(int i = 0; i < projects.size(); i++){
                             if(id_aux == projects.get(i).getId()){
+                                Task task = new Task(id_t, namet, descrt,StringToDateRange(date_start1, date_end1), projects.get(i).getName());
                                 projects.get(i).tasks.add(task);
                                 
                                 System.out.println(namet+" Foi adicionado com sucesso");
@@ -736,6 +734,16 @@ public class Sistema implements Login{
                 break;
             }
         }
+    }
+    public static DateRange StringToDateRange(String date1, String date2){
+
+        LocalDateTime a;
+        LocalDateTime b;
+
+        a =  LocalDateTime.parse(date1);
+        b =  LocalDateTime.parse(date2);
+        DateRange date_range = new DateRange(a,b);
+        return date_range;
     }
     
 

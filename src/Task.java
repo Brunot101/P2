@@ -7,11 +7,12 @@ public class Task extends Project {
     
     public User user_resp;
     public List<User>users = new ArrayList<User>();
+    public String project;
     
 
-    public Task(int id, String name, String description,DateRange date){
+    public Task(int id, String name, String description,DateRange date, String project){
         super(id, name, description, date, null);
-        
+        this.project = project;
         // this.id = id;
         // this.name = name;
         // this.description = description;
@@ -27,7 +28,7 @@ public class Task extends Project {
         
         System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME",  "DATE START", "DATE END", "PROJECT");
                     System.out.println();
-                    System.out.printf("%5s %20s %20s  %20s %20s ", getId(), getName(),date.showDateStart()  , date.showDateEnd(), getName());
+                    System.out.printf("%5s %20s %20s  %20s %20s ", getId(), getName(),date.showDateStart()  , date.showDateEnd(), this.project);
                     System.out.println();
                     System.out.printf("Description:");
                     System.out.println();
