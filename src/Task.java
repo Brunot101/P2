@@ -4,17 +4,14 @@ import java.time.LocalDateTime;
 
 
 public class Task extends Project {
-    // private int id;
-    // private String name;
-    // private String description;
-    // private LocalDateTime date_start;
-    // private LocalDateTime date_end;
+    
     public User user_resp;
     public List<User>users = new ArrayList<User>();
     
 
-    public Task(int id, String name, String description,LocalDateTime date_start,LocalDateTime date_end){
-        super(id, name, description, date_start, date_end, null);
+    public Task(int id, String name, String description,DateRange date){
+        super(id, name, description, date, null);
+        
         // this.id = id;
         // this.name = name;
         // this.description = description;
@@ -30,7 +27,7 @@ public class Task extends Project {
         
         System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME",  "DATE START", "DATE END", "PROJECT");
                     System.out.println();
-                    System.out.printf("%5s %20s %20s  %20s %20s ", getId(), getName(),  showDateStart(), showDateEnd(), getName());
+                    System.out.printf("%5s %20s %20s  %20s %20s ", getId(), getName(),date.showDateStart()  , date.showDateEnd(), getName());
                     System.out.println();
                     System.out.printf("Description:");
                     System.out.println();
@@ -42,6 +39,7 @@ public class Task extends Project {
                     for(User user : this.users){
                         System.out.println(user.getName());
                     }
+                    
     }
     
 

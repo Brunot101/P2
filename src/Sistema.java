@@ -127,11 +127,12 @@ public class Sistema implements Login{
                         date_end = scn.nextLine();
                         a =  LocalDateTime.parse(date_start);
                         b =  LocalDateTime.parse(date_end);
+                        DateRange date_range = new DateRange(a,b);
                         System.out.println("Digite a vigencia da bolsa projeto");
                         String money_duration = scn.nextLine();
                         System.out.println(namep+" Foi adicionado com sucesso");
                         
-                        Project project = new Project(id_p, namep, descr, a, b, money_duration);
+                        Project project = new Project(id_p, namep, descr, date_range, money_duration);
                         projects.add(project);
                         
                         
@@ -207,7 +208,8 @@ public class Sistema implements Login{
                         String date_end1 = scn.nextLine();
                         LocalDateTime ex1 = LocalDateTime.parse(date_start1);
                         LocalDateTime ex2 = LocalDateTime.parse(date_end1);
-                        Task task = new Task(id_t, namet, descrt, ex1, ex2);
+                        DateRange date = new DateRange(ex1,ex2);
+                        Task task = new Task(id_t, namet, descrt,date);
                         for(int i = 0; i < projects.size(); i++){
                             if(id_aux == projects.get(i).getId()){
                                 projects.get(i).tasks.add(task);
@@ -357,12 +359,12 @@ public class Sistema implements Login{
                                     }
                                     if(date_start1.length() != 0){
                                         LocalDateTime ex1 = LocalDateTime.parse(date_start1);
-                                        task.setDateStart(date_start1);
+                                        task.date.setDateStart(date_start1);
                                     }
                                     
                                     if(date_end1.length() != 0){
                                         LocalDateTime ex2 = LocalDateTime.parse(date_end1);
-                                        task.setDateEnd(date_end1);
+                                        task.date.setDateEnd(date_end1);
                                     }
                                 flagt = true;
                                     
@@ -422,14 +424,14 @@ public class Sistema implements Login{
                                 }
                                 if(date_start.length()!= 0){
                                     a =  LocalDateTime.parse(date_start);
-                                    project.setDateStart(date_start);
+                                    project.date.setDateStart(date_start);
                                 }
                                 if(date_end.length()!= 0){
                                     b =  LocalDateTime.parse(date_end);
-                                    project.setDateEnd(date_end);
+                                    project.date.setDateEnd(date_end);
                                 }
                                 if(money_duration.length()!= 0){
-                                    project.setDateEnd(money_duration);
+                                    project.setMoneyDuration(money_duration);
                                 }
                                 
 

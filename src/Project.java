@@ -8,8 +8,7 @@ public class Project {
     private String name;
     private String description;
     private String status;
-    private LocalDateTime date_start;
-    private LocalDateTime date_end;
+    public DateRange date;
     public User coord;
     public List<User>users = new ArrayList<User>();
     public List<Task>tasks = new ArrayList<Task>();
@@ -19,13 +18,12 @@ public class Project {
 
 
 
-    public Project(int id, String name, String description,  LocalDateTime date_start, LocalDateTime date_end, String money_duration){
+    public Project(int id, String name, String description,  DateRange date, String money_duration){
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = "em processo de criacao";
-        this.date_start = date_start;
-        this.date_end = date_end;
+        this.date = date;
         this.money_duration = money_duration;
     }
 
@@ -68,19 +66,11 @@ public class Project {
     // public void setProjectMoney(String newMoney){
     //     this.money = newMoney;
     // }
-    public void setDateStart(String dateTimeStart){
-        LocalDateTime ex = LocalDateTime.parse(dateTimeStart);
-        this.date_start = ex;
-    }
-
-    public void setDateEnd(String dateTimeEnd){
-        LocalDateTime ex = LocalDateTime.parse(dateTimeEnd);
-        this.date_end = ex;
-    }
+    
     
     
     public void changeStatus(){
-        if(this.date_start != null && this.date_end != null
+        if(this.date.getDateStart() != null && this.date.getDateStart() != null
         && !this.tasks.isEmpty() && !this.users.isEmpty() && !this.money_duration.isEmpty()
         && !this.money_max.isEmpty() ){
 
@@ -91,7 +81,7 @@ public class Project {
                     this.status = "inciado";
                 }
     
-                else if(this.status.equalsIgnoreCase("inciado") && this.date_start.isAfter(LocalDateTime.now()) ){
+                else if(this.status.equalsIgnoreCase("inciado") && this.date.getDateStart().isAfter(LocalDateTime.now()) ){
                     this.status = "em andamento";
     
                 }
@@ -109,19 +99,11 @@ public class Project {
         }
     }
 
-    public String showDateStart(){
-        
-        return this.date_start.toString();
-    }
-
-    public String showDateEnd(){
-        
-        return this.date_end.toString();
-    }
+    
     public void showInfo(){
         System.out.printf("%5s %20s %20s %20s %20s  ", "ID", "NAME", "STATUS", "DATE START", "DATE END");
                 System.out.println();
-                System.out.printf("%5s %20s %20s %20s %20s ",this.id, this.name, this.status, showDateStart(), showDateEnd());
+                System.out.printf("%5s %20s %20s %20s %20s ",this.id, this.name, this.status, date.showDateStart(), date.showDateEnd());
                 System.out.println();
                 System.out.printf("Description:");
                 System.out.println();
