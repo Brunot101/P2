@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.sound.sampled.SourceDataLine;
+
 
 public class Sistema implements Login{
     public static void main(String[] args) throws Exception {
@@ -37,7 +39,9 @@ public class Sistema implements Login{
         while(true){
             System.out.printf("Escolha uma opção do menu:");
             int option = Integer.parseInt (scn.nextLine());
+            
 
+            
             switch(option){
                 case 1:
                     try{
@@ -445,6 +449,7 @@ public class Sistema implements Login{
 
                             break;
                         }
+
                     }
                     if(!flagh){
                         System.out.println("Projeto nao existente");
@@ -453,6 +458,19 @@ public class Sistema implements Login{
                     
                     
                     break;
+                case 15:
+                    System.out.println("Qual o nome do usuario voce deseja associar ao projeto?");
+                    username3 = scn.nextLine();
+                    System.out.println("Qual o nome do projeto que ele sera associado?");
+                    namep = scn.nextLine();
+                    addUserProject(projects, users, username3, namep);
+                    break;
+                case 16:
+                    System.out.println("Qual o nome do usuario voce deseja associar ao projeto?");
+                    username3 = scn.nextLine();
+                    System.out.println("Qual o nome da atividade que ele sera associado?");
+                    namet = scn.nextLine();
+                    addUserTask(projects, users, username3, namet);
                     
                 case 0:
                     
@@ -496,6 +514,8 @@ public class Sistema implements Login{
         System.out.println("(12)Editar usuario");
         System.out.println("(13)Editar atividade");
         System.out.println("(14)Editar projeto");
+        System.out.println("(15)Associar usuario a um projeto");
+        System.out.println("(16)Associar usuario a uma atividade");
     }
 
     // public static void addProject(String namep, String descr, int id, Project project){
@@ -642,7 +662,10 @@ public class Sistema implements Login{
             }
             
         }
-        if(projectaux == -1 || useraux == -1) return;
+        if(projectaux == -1 || useraux == -1){
+            System.out.println("Algo deu errado!");
+            return;
+        } 
         projects.get(projectaux).users.add(users.get(useraux));
         users.get(useraux).projects.add(projects.get(projectaux));
 
@@ -688,6 +711,9 @@ public class Sistema implements Login{
 
                 if(user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)){
                         System.out.println("Login efetuado com sucesso! Bem vindo " + user.getName());
+                        LoginUser newuser = new LoginUser(user);
+                        newuser.login();
+
                         flag = true;
                         
                     }
