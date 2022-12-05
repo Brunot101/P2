@@ -16,7 +16,7 @@ public class Sistema implements Login{
         List<User>users = new ArrayList<User>();
         User admin = new User(0, "admin", "professor", "admin", "admin", "null", "null");
         users.add(admin);
-
+        int option = 0;
         
         
         
@@ -30,13 +30,30 @@ public class Sistema implements Login{
         
         while(true){
 
-            System.out.println("Username:");
-            String username1 = scn.nextLine();
-            System.out.println("Password:");
-            String password1 = scn.nextLine();
-            
-            
-            login(users, projects, indices, username1, password1);
+            System.out.println("(1)Login");
+            System.out.println("(2)Recuperar a senha");
+            try {
+                option = Integer.parseInt (scn.nextLine());
+            } catch (Exception e) {
+                e.getMessage();
+            }
+            switch(option){
+
+                case 1:
+                    System.out.println("Username:");
+                    String username1 = scn.nextLine();
+                    System.out.println("Password:");
+                    String password1 = scn.nextLine();
+                    login(users, projects, indices, username1, password1);
+                    break;
+
+                case 2:
+                    System.out.println("Username:");
+                    username1 = scn.nextLine();
+                    changePassword(users, username1);
+                    break;
+                default:break;
+            }
             
         }
     }
@@ -61,6 +78,7 @@ public class Sistema implements Login{
         System.out.println("(14)Editar projeto");
         System.out.println("(15)Associar usuario a um projeto");
         System.out.println("(16)Associar usuario a uma atividade");
+        System.out.println("(0)Logout");
     }
 
     // public static void addProject(String namep, String descr, int id, Project project){
@@ -275,7 +293,7 @@ public class Sistema implements Login{
                 }
         }
         catch(Exception e){
-           System.out.println(e.getMessage());
+           
         }
         
             
@@ -329,5 +347,4 @@ public class Sistema implements Login{
         
     
 }
-
 

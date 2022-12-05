@@ -63,6 +63,7 @@ public class LoginUser  {
         String date_end;
         LocalDateTime a;
         LocalDateTime b;
+        int option=-1;
 
         String[] list1 = {"graduando", "mestrando", "doutorando", "professor", "pesquisador", "profissional", "tecnico"};
         List<String> list2 = Arrays.asList(list1);
@@ -76,7 +77,12 @@ public class LoginUser  {
         
         while(true){
             System.out.printf("Escolha uma opção do menu:");
-            int option = Integer.parseInt (scn.nextLine());
+            try {
+                option = Integer.parseInt (scn.nextLine());
+            } catch (Exception e) {
+                
+            }
+            
             
 
             
@@ -163,15 +169,16 @@ public class LoginUser  {
                     namep = scn.nextLine();
                     System.out.println("Descricao");
                     descr = scn.nextLine();
-                    System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
+                    
                     try{
+                        System.out.println("Digite a data e hora do inicio do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
                         date_start = scn.nextLine();
                         System.out.println("Digite a data e hora do termino do projeto no formato AAAA-MM-DDTHH:MM:SS. Os segundos  podem ser omitidos");
                         date_end = scn.nextLine();
                         
                         System.out.println("Digite a vigencia da bolsa projeto");
                         String money_duration = scn.nextLine();
-                        System.out.println(namep+" Foi adicionado com sucesso");
+                        
                         
                         Project project = new Project(indices.id_p, namep, descr, StringToDateRange(date_start, date_end), money_duration);
                         projects.add(project);
@@ -182,8 +189,10 @@ public class LoginUser  {
                     }
                     catch(DateTimeParseException e){
                         System.out.println("Formato de data e hora incorreto");
+                        break;
 
                     }
+                    System.out.println(namep+" Foi adicionado com sucesso");
                     break;
                 
                 case 4:
@@ -466,6 +475,7 @@ public class LoginUser  {
                             }
                             catch(DateTimeParseException e){
                                 System.out.println("Formato de data e hora incorreto");
+                                break;
         
                             }
                             flagh = true;
@@ -498,16 +508,7 @@ public class LoginUser  {
                     
                 case 0:
                     
-                    // projects.get(0).coord = users.get(0);
-                    // projects.get(0).changeDateStart("2022-09-11T22:00");
-                    // projects.get(0).changeDateEnd("2023-09-11T21:00");
-                    // projects.get(0).money = "400";
-                    // projects.get(0).money_time = "1 ano";
-                    // projects.get(0).duration = "1 ano";
-                    
-
-                    
-                    System.out.println("Encerrando o sistema...");break;
+                    break;
                     
                     
                 default: break;

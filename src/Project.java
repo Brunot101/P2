@@ -13,7 +13,7 @@ public class Project {
     public List<User>users = new ArrayList<User>();
     public List<Task>tasks = new ArrayList<Task>();
     public String money_duration;
-    public String money_max;
+    public String money_max = "0";
     // public String money_time;
 
 
