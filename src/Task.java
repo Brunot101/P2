@@ -34,7 +34,10 @@ public class Task extends Project {
                     System.out.println();
                     System.out.printf(getDescription());
                     System.out.println();
-                    System.out.printf("Resp: " + this.user_resp);
+                    if(user_resp!= null){
+
+                        System.out.printf("Resp: " + this.user_resp);
+                    }
                     System.out.println();
                     System.out.println("Team: ");
                     for(User user : this.users){

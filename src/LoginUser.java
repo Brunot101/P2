@@ -469,7 +469,7 @@ public class LoginUser  {
                                 if(money_duration.length()!= 0){
                                     project.setMoneyDuration(money_duration);
                                 }
-                                
+                                flagh = true;
 
                             
         
@@ -479,7 +479,7 @@ public class LoginUser  {
                                 break;
         
                             }
-                            flagh = true;
+                            
                             
 
                             break;
@@ -506,6 +506,16 @@ public class LoginUser  {
                     System.out.println("Qual o nome da atividade que ele sera associado?");
                     namet = scn.nextLine();
                     addUserTask(projects, users, username3, namet);
+                    break;
+
+
+                case 17:
+                    System.out.println("Qual o nome do coordenador voce deseja associar ao projeto?");
+                    username3 = scn.nextLine();
+                    System.out.println("Qual o nome do projeto que ele sera associado?");
+                    namep = scn.nextLine();
+                    addCordinator(users, projects, namep, username3);
+                    break;
                     
                 case 0:
                     
@@ -541,6 +551,9 @@ public class LoginUser  {
         System.out.println("(14)Editar projeto");
         System.out.println("(15)Associar usuario a um projeto");
         System.out.println("(16)Associar usuario a uma atividade");
+        System.out.println("(17)Associar coordenador ao projeto");
+        System.out.println("(0)Logout");
+        
     }
 
     // public static void addProject(String namep, String descr, int id, Project project){
@@ -741,6 +754,31 @@ public class LoginUser  {
         DateRange date_range = new DateRange(a,b);
         return date_range;
     }
+
+
+    public static void addCordinator(List<User> users, List<Project> projects, String project, String cordinator){
+
+        
+        for(User user:users){
+            if(user.getName().equalsIgnoreCase(cordinator) && (user.getType().equalsIgnoreCase("professor") || user.getType().equalsIgnoreCase("cordenador"))){
+
+                for(Project project1: projects){
+                    if(project1.getName().equalsIgnoreCase(project)){
+                        project1.coord = user;
+                        System.out.println("Coordenador adicionado com sucesso");
+                        return;
+                    }
+                }
+            }
+            
+        }
+        
+        System.out.println("Algo deu errado!");
+
+
+    }
+
+
 }
 
 

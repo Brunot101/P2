@@ -51,6 +51,7 @@ public class Project {
         return this.money_duration;
     }
     
+    
 
 
 
@@ -109,7 +110,10 @@ public class Project {
                 System.out.println();
                 System.out.printf(getDescription());
                 System.out.println();
-                System.out.printf("Cordinator: " + this.coord);
+                if(coord!=null){
+
+                    System.out.printf("Cordinator: " + this.coord.getName());
+                }
                 System.out.println();
                 System.out.println("Team: ");
                 for(User user : users){
