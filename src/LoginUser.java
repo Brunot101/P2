@@ -178,9 +178,10 @@ public class LoginUser  {
                         
                         System.out.println("Digite a vigencia da bolsa projeto");
                         String money_duration = scn.nextLine();
+                        DateRange newdate = StringToDateRange(date_start, date_end);
                         
                         
-                        Project project = new Project(indices.id_p, namep, descr, StringToDateRange(date_start, date_end), money_duration);
+                        Project project = new Project(indices.id_p, namep, descr, newdate, money_duration);
                         projects.add(project);
                         
                         

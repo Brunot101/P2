@@ -48,6 +48,7 @@ public class Sistema implements Login{
                     break;
 
                 case 2:
+                    
                     System.out.println("Username:");
                     username1 = scn.nextLine();
                     changePassword(users, username1);
@@ -72,7 +73,6 @@ public class Sistema implements Login{
         System.out.println("(8)Consultar atividade");
         System.out.println("(9)Imprimir relatorio");
         System.out.println("(10)Login");
-        System.out.println("(11)Recuperar senha");
         System.out.println("(12)Editar usuario");
         System.out.println("(13)Editar atividade");
         System.out.println("(14)Editar projeto");
@@ -307,10 +307,13 @@ public class Sistema implements Login{
 
         boolean flag = false;
         for(User user : users){
+            
             if(user.getUsername().equalsIgnoreCase(username)){
+                
                 flag = true;
                 Scanner scn = new Scanner(System.in);
                 System.out.printf(user.getQuestion()+"?");
+                System.out.println();
                 String answer = scn.nextLine();
                 if(answer.equalsIgnoreCase(user.getAnswer())){
                     System.out.printf("Digite a nova senha:");
@@ -324,10 +327,11 @@ public class Sistema implements Login{
                     break;
                 }
             }
-            if(flag == false){
-                System.out.println("Usuario nao encontrado!");
-                break;
-            }
+            
+        }
+        if(flag == false){
+            System.out.println("Usuario nao encontrado!");
+            
         }
     }
     public static DateRange StringToDateRange(String date1, String date2){
