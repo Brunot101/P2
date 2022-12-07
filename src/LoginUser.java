@@ -501,7 +501,7 @@ public class LoginUser  {
                     addUserProject(projects, users, username3, namep);
                     break;
                 case 16:
-                    System.out.println("Qual o nome do usuario voce deseja associar ao projeto?");
+                    System.out.println("Qual o nome do usuario voce deseja associar a atividade?");
                     username3 = scn.nextLine();
                     System.out.println("Qual o nome da atividade que ele sera associado?");
                     namet = scn.nextLine();
@@ -545,7 +545,6 @@ public class LoginUser  {
         System.out.println("(7)Consultar usuario");
         System.out.println("(8)Consultar atividade");
         System.out.println("(9)Imprimir relatorio");
-        System.out.println("(11)Recuperar senha");
         System.out.println("(12)Editar usuario");
         System.out.println("(13)Editar atividade");
         System.out.println("(14)Editar projeto");
@@ -732,7 +731,11 @@ public class LoginUser  {
                 }
             }
         }
-        if(taskauxi == -1 || useraux == -1  || taskauxj == -1) return;
+        if(taskauxi == -1 || useraux == -1  || taskauxj == -1){
+
+            System.out.println("Algo deu errado!");
+            return;
+        } 
         projects.get(taskauxi).tasks.get(taskauxj).users.add(users.get(useraux));
         users.get(useraux).tasks.add(projects.get(taskauxi).tasks.get(taskauxj));
         
